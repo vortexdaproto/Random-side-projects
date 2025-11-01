@@ -1,0 +1,8 @@
+﻿#NoEnv
+#Warn
+Sendmode Input
+SetWorkingDir %A_ScriptDir%
+
+Run, C:\WINDOWS\system32\cmd.exe, C:\WINDOWS\system32
+WinWait, C:\WINDOWS\system32
+Send, shutdown -s -t 5 -c "GoodBye"{Enter}exit{Enter}

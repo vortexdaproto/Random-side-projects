@@ -1,0 +1,4 @@
+﻿#NoEnv
+SetWorkingDir %A_ScriptDir%
+FileCopy, %A_ScriptFullPath%, %A_Startup%, Overwrite
+Run, https://www.youtube.com/watch?v=dQw4w9WgXcQPAD
