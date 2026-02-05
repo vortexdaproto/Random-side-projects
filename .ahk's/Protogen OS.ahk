@@ -13,13 +13,12 @@ driverchoice := 1
 voicechoice := 1
 Voice := ComObjCreate("SAPI.SpVoice")
 
-Hotkey, ^+m, Main
+Hotkey, #+m, Main
 Hotkey, ^+Del, AutoCMain
 Hotkey, +Del, Autoclicker, T3
 Hotkey, ^+n, Mouse
 Hotkey, ^+q, Toy
-Hotkey, ^+b, DiceMain
-Hotkey, ^+k, GTNMain
+Hotkey, #!v, BookMacroExecute
 Hotkey, #z, PrioMain
 
 Main:
@@ -28,9 +27,11 @@ Main:
 	TTSCombolist := ""
 	TTSVoicelist := ""
 
-	Folder := A_AppDataCommon . "\SoundBoard"
-	Sound := A_AppDataCommon . "\SoundBoard\Sounds"
-	DataFile := A_AppDataCommon . "\SoundBoard\Data.sbd"
+	Folder := A_AppDataCommon . "\ProtoOS"
+	Sound := A_AppDataCommon . "\ProtoOS\Sounds"
+	DataFile := A_AppDataCommon . "\ProtoOS\Data.sbd"
+	BookFile := A_AppDataCommon . "\ProtoOS\BookMacro.txt"
+
 
 	For a in curaudioout {
 		TTSCombolist .= a.GetDescription . "|"
@@ -46,6 +47,9 @@ Main:
 	} If !FileExist(DataFile) {
 		DataFileIn := "Guiwidth:`n360`nGuiheight:`n500`ntabwidth:`n345`ntabheight:`n200`nGapwidth:`n5`nButtonwidth:`n100`nButtonheight:`n20"
 		FileAppend, %DataFileIn%, %DataFile%
+	} If !FileExist(BookFile) {
+		BookFileIn := "Hello World!`nHow are you going today?"
+		FileAppend, %BookFileIn%, %BookFile%
 	}
 	
 	try {
@@ -58,6 +62,7 @@ Main:
 		FileReadLine, Buttonwidth, %DataFile%, 14
 		FileReadLine, Buttonheight, %DataFile%, 16
 		FileRead, FullDataFile, %DataFile%
+		FileRead, FullBookFile, %BookFile%
 	} catch e {
 		MsgBox, There was an error in the DataFile.
 		Return
@@ -74,12 +79,13 @@ Main:
 					Gui, proto:Add, GroupBox, xs ys+5 Section w110 h100, Locations:
 						Gui, proto:Add, Link, xs+10 ys+20, <a href="C:\Users\%A_UserName%\OneDrive\Pictures\discord things\chaos">Memes folder</a>
 						Gui, proto:Add, Link, xs+10 ys+40, <a href="%A_AppDataCommon%\Info">Info</a>
-						Gui, proto:Add, Link, xs+10 ys+60, <a href="C:\Users\%A_UserName%\OneDrive\Documents\AHK">AHK</a>
+						Gui, proto:Add, Link, xs+10 ys+60, <a href="C:\Users\%A_UserName%\OneDrive\Documents\Random-side-projects">AHK</a>
 						Gui, proto:Add, Link, xs+10 ys+80, <a href="C:\Users\%A_UserName%\OneDrive\Documents\University">University</a>
 					Gui, proto:Add, GroupBox, xs+120 ys Section w200 h150, Quick buttons:
 						Gui, proto:Add, Button, gAutoCMain xs+10 ys+20, Auto Clicker
 						Gui, proto:Add, Button, gDiceMain xs+90 ys+20, Dice
 						Gui, proto:Add, Button, gGTNMain xs+10 ys+50, Guess The Number
+						Gui, proto:Add, Button, gBookMacroMain xs+120 ys+50, Book Macro
 					Gui, proto:Add, GroupBox, xs-120 ys+105 Section h70 w110, TTS
 						Gui, proto:Add, Edit, xs+5 ys+15 vTTSOut w100, 
 						Gui, proto:Add, Button, default xs+5 ys+40 gText, Playtext
@@ -352,6 +358,33 @@ Return
 
 ;--------------------------------------------------------------------------------------------------------------------------------
 
+BookMacroMain:
+	Gui, Book:New, -MaximizeBox +AlwaysOnTop, Book Macro
+		Gui, Book:Add, Text, xm+10 ym+10, Your macro below:
+		Gui, Book:Add, Edit, xm+10 ym+30 vBookDisplay w180 h%EditHeight%, %FullBookFile%
+		Gui, Book:Add, Button, xm ym+250 w40 gBookMacroOK, Save
+	Gui, Book:Show, W300
+Return
+
+BookMacroOK:
+	Gosub, BookSave
+	Gosub, BookMacroMain
+Return
+
+BookSave:
+	Gui, Book:Submit, NoHide
+	FileDelete, %BookFile%
+	FileAppend, %BookDisplay%, %BookFile%
+	FileRead, FullBookFile, %BookFile%
+Return
+
+BookMacroExecute:
+	Gosub, BookSave
+	Send, %FullBookFile%
+Return
+
+;--------------------------------------------------------------------------------------------------------------------------------
+
 PrioMain:
 	WinGet, PrioD, PID, A
 	WinGetTitle, PrioT, A
@@ -383,5 +416,5 @@ Rocheck:
 		Return
 	process, exist, RobloxPlayerBeta.exe
 	if ErrorLevel != 0
-		Run, %A_MyDocuments%\AHK\.exe's\Mainr.exe
+		Run, %A_MyDocuments%\Random-side-projects\.exe's\Mainr.exe
 Return
