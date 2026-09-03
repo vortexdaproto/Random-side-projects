@@ -2,8 +2,9 @@ ul[aria-label="Direct Messages"] > li:has(> div > a[data-list-item-id$="___shop"
 li:has(> div > a[data-list-item-id$="___nitro"]), /* Nukes Nitro on friends page */
 li:has(> div > a[data-list-item-id$="___quests"]), /* Nukes Quests on friends page */
 div[aria-label="Members"] > h3.membersGroup_c8ffbb:has(> span.headerContainer__095fe > div), /* nukes activity header */
-div[aria-label="Members"] > div:has(> div[role="listitem"] > div.openOnHover__0f2e8), /* nukes activity divs */
-div.container__675e5:has(> h2.privateChannelsHeaderContainer__99e7c) { /* nukes play again divs */
+div[aria-label="Members"] > div:has(> div[role="button"] > div.openOnHover__0f2e8), /*, nukes activity divs */
+/*div.container__675e5:has(> h2.privateChannelsHeaderContainer__99e7c),*/ /* nukes play again divs */
+div.itemCard__7e549 > div > div.body__00943 > div.wrapper__11054 /* Nuke promotinal quests */ {
     display: none;
     pointer-events: none;
 }
