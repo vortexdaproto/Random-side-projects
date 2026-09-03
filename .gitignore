@@ -1,2 +1,4 @@
 # Ignore Dice output
 Diceout.txt
+# Ignore compiled executables
+*.exe
