@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.regex.*;
 
-public class NCatCompute {
+public class TipsAndTricks {
     public static void main(String[] args) {
          // If there are missing inputs, inform the user and exit
         if (args.length < 2) {
