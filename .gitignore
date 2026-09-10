@@ -2,3 +2,5 @@
 Diceout.txt
 # Ignore compiled executables
 *.exe
+# Ignore compiled object files
+*.class
