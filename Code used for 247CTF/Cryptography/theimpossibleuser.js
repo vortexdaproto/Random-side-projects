@@ -3,8 +3,8 @@ function toHex(str) {
 	for(i=0;i<str.length;i++) {
 		hex = hex + str.charCodeAt(i).toString(16);
     }
-	console.debug(str.length + ": " + hex)
-	return hex
+	console.debug(str.length + ": " + hex);
+	return hex;
 }
 console.debug("impossible_flag".length)
 console.debug("_user".length)
